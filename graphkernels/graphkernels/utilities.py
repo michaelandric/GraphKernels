@@ -22,7 +22,7 @@ def GetGraphInfo(g):
 
     # matrix of edges
     E = np.zeros(shape = (len(g.es),2))
-    for i in xrange(len(g.es)):
+    for i in range(len(g.es)):
         E[i,:] = g.es[i].tuple
         ## there are multiple edge attributes
     if len(g.es.attributes()) > 1:
@@ -63,7 +63,7 @@ def GetGKInput(G):
     E_count = gkCpy.IntVector()
     D_max = gkCpy.IntVector()
 
-    for i in xrange(len(G)):
+    for i in range(len(G)):
         g_info = GetGraphInfo(G[i])
         E.append(g_info['edge'])
         V_label.append(gkCpy.IntVector(g_info['vlabel'].reshape(-1).tolist()))
@@ -79,7 +79,7 @@ def GetAdjMatList(G):
     adj_mat = gkCpy.VecMatrixXi()
     adj_list = gkCpy.IntIntIntVector()
 
-    for i in xrange(len(G)):
+    for i in range(len(G)):
 
         # get adjacency matrix of graph i
         am_cur = G[i].get_adjacency()
@@ -89,7 +89,7 @@ def GetAdjMatList(G):
         # get adjacency list of graph i
         al_cur = np.asarray(G[i].get_adjlist())
 
-        for j in xrange(len(al_cur)):
+        for j in range(len(al_cur)):
                 al_cur[j] = gkCpy.IntVector(al_cur[j])
 
         adj_list.append(gkCpy.IntIntVector(al_cur))
