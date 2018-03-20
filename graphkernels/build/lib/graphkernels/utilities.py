@@ -95,3 +95,28 @@ def GetAdjMatList(G):
         adj_list.append(gkCpy.IntIntVector(al_cur))
 
     return adj_mat, adj_list
+
+
+def normalizekm(K):
+    """
+    Normalize the kernel matrix.
+    Based on a funciton from here
+    http://members.cbio.mines-paristech.fr/~nshervashidze/code/
+    which was originally Karsten Borgwardt
+
+    Normalize the kernel matrix such that
+    diag(result) = 1, i.e. K(x,y) / sqrt(K(x,x) * K(y,y))
+
+    K:
+        a kernel matrix
+
+    returns:
+        the normalized result
+    """
+    nv = np.sqrt(np.diag(K))
+    nm = nv[:, np.newaxis] * nv[:, np.newaxis].T
+    Knm = nm**-1
+
+    Knm[np.where(np.isnan(Knm))] = 0
+
+    return (K * Knm)
